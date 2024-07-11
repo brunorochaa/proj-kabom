@@ -1,0 +1,216 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Fonte e cores */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+/* Header e navegação */
+header {
+    background-color: #1f1f1f;
+    padding: 20px 0;
+    color: #fff;
+}
+
+.logo-nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo-nav-container img {
+    height: 50px;
+    transition: transform 0.3s;
+}
+
+.logo-nav-container img:hover {
+    transform: rotate(360deg);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+nav a {
+    color: #ff9800;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #ff5722;
+}
+
+/* Layout principal */
+main {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+section {
+    background: #1f1f1f;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 40px;
+    padding: 20px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #ff9800;
+    position: relative;
+}
+
+h2::after {
+    content: '';
+    width: 50px;
+    height: 3px;
+    background-color: #ff9800;
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+}
+
+/* Formulários */
+form {
+    margin-bottom: 20px;
+}
+
+form label {
+    font-weight: bold;
+    display: block; /* Mostra o label como bloco para que cada um ocupe uma linha */
+    margin-bottom: 5px; /* Espaço entre os labels */
+}
+
+form input,
+form select,
+form textarea {
+    display: block; /* Mostra os inputs, selects e textareas como bloco para ocuparem uma linha cada */
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+    margin-bottom: 10px; /* Espaço entre os campos */
+    width: 100%; /* Ocupar a largura disponível */
+    box-sizing: border-box; /* Garantir que o padding não altere a largura total */
+}
+
+form input:focus, form select:focus, form textarea:focus {
+    outline: none;
+    border-color: #ff9800;
+    box-shadow: 0 0 5px rgba(255, 152, 0, 0.5);
+}
+
+form button {
+    align-self: flex-start;
+    background-color: #ff9800;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #ff5722;
+}
+
+/* Botões */
+button {
+    background-color: #ff9800;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #ff5722;
+}
+
+/* Tabelas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead {
+    background-color: #1f1f1f;
+    color: #fff;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+th {
+    font-weight: bold;
+}
+
+tbody tr:hover {
+    background-color: #2c2c2c;
+}
+
+/* Footer */
+footer {
+    background-color: #1f1f1f;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 40px;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .logo-nav-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav {
+        flex-direction: column;
+    }
+
+    nav a {
+        margin: 10px 0;
+    }
+
+    main {
+        margin: 20px auto;
+        padding: 0 10px;
+    }
+
+    section {
+        padding: 15px;
+    }
+}
+
+/* Efeitos adicionais */
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #ff9800;
+    box-shadow: 0 0 5px rgba(255, 152, 0, 0.5);
+}
