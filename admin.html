@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kabom | Área administrativa</title>
+    <link rel="icon" href="img/logo.png">
+    <link rel="stylesheet" href="css/loja.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <script src="js/dados-exemplo.js" defer></script>
+    <script src="js/util.js" defer></script>
+    <script src="js/dados.js" defer></script>
+    <script src="js/admin.js" defer></script>
+</head>
+<body>
+<header class="topo">
+    <p class="faixa">Área administrativa &middot; os dados ficam salvos neste navegador</p>
+    <div class="conteudo topo-admin">
+        <a class="marca" href="index.html" title="Voltar à loja">
+            <span class="marca-icone"><img src="img/logo.png" alt=""></span>
+            <span class="marca-nome">KABOM<small>admin</small></span>
+        </a>
+        <nav class="menu-admin" aria-label="Seções">
+            <a href="#clientes">Clientes</a>
+            <a href="#produtos">Produtos</a>
+            <a href="#pedidos">Pedidos</a>
+            <a class="botao" href="index.html">Ver loja</a>
+        </nav>
+    </div>
+</header>
+
+<main class="conteudo admin">
+    <section class="painel" id="clientes">
+        <h2>Clientes</h2>
+        <form id="form-cliente" class="formulario">
+            <input type="hidden" name="id">
+            <div class="campo">
+                <label for="cliente-nome">Nome</label>
+                <input id="cliente-nome" name="nome" required maxlength="100">
+            </div>
+            <div class="campo">
+                <label for="cliente-telefone">Telefone</label>
+                <input id="cliente-telefone" name="telefone" type="tel" required maxlength="20">
+            </div>
+            <div class="campo">
+                <label for="cliente-email">E-mail</label>
+                <input id="cliente-email" name="email" type="email" required maxlength="100">
+            </div>
+            <div class="campo">
+                <label for="cliente-documento">CPF/CNPJ</label>
+                <input id="cliente-documento" name="documento" required maxlength="18">
+            </div>
+            <div class="campo campo-largo">
+                <label for="cliente-endereco">Endereço</label>
+                <input id="cliente-endereco" name="endereco" required maxlength="150">
+            </div>
+            <div class="acoes-formulario">
+                <button type="submit" class="botao">Adicionar</button>
+                <button type="button" class="botao-secundario" data-acao="cancelar" hidden>Cancelar edição</button>
+            </div>
+        </form>
+        <div class="tabela-rolavel">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>E-mail</th>
+                    <th>CPF/CNPJ</th>
+                    <th>Endereço</th>
+                    <th>Ações</th>
+                </tr>
+                </thead>
+                <tbody id="lista-clientes"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="painel" id="produtos">
+        <h2>Produtos</h2>
+        <form id="form-produto" class="formulario">
+            <input type="hidden" name="id">
+            <div class="campo">
+                <label for="produto-nome">Nome</label>
+                <input id="produto-nome" name="nome" required maxlength="100">
+            </div>
+            <div class="campo">
+                <label for="produto-categoria">Categoria</label>
+                <input id="produto-categoria" name="categoria" list="categorias-sugeridas" required maxlength="50">
+                <datalist id="categorias-sugeridas">
+                    <option value="PlayStation"></option>
+                    <option value="Xbox"></option>
+                    <option value="Nintendo"></option>
+                </datalist>
+            </div>
+            <div class="campo">
+                <label for="produto-preco">Preço (R$)</label>
+                <input id="produto-preco" name="preco" type="number" min="0" step="0.01" required>
+            </div>
+            <div class="campo campo-largo">
+                <label for="produto-descricao">Descrição curta</label>
+                <input id="produto-descricao" name="descricao" maxlength="80">
+            </div>
+            <div class="campo campo-largo">
+                <label for="produto-imagem">Imagem (endereço da foto ou caminho, ex.: img/produtos/xbox.jpg)</label>
+                <input id="produto-imagem" name="imagem" required maxlength="300">
+            </div>
+            <div class="acoes-formulario">
+                <button type="submit" class="botao">Adicionar</button>
+                <button type="button" class="botao-secundario" data-acao="cancelar" hidden>Cancelar edição</button>
+            </div>
+        </form>
+        <div class="tabela-rolavel">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Imagem</th>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Preço</th>
+                    <th>Ações</th>
+                </tr>
+                </thead>
+                <tbody id="lista-produtos"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="painel" id="pedidos">
+        <h2>Pedidos</h2>
+        <form id="form-pedido" class="formulario">
+            <div class="campo">
+                <label for="pedido-cliente">Cliente</label>
+                <select id="pedido-cliente" name="clienteId" required></select>
+            </div>
+            <div class="campo">
+                <label for="pedido-produto">Produto</label>
+                <select id="pedido-produto" name="produtoId" required></select>
+            </div>
+            <div class="campo">
+                <label for="pedido-quantidade">Quantidade</label>
+                <input id="pedido-quantidade" name="quantidade" type="number" min="1" value="1" required>
+            </div>
+            <div class="campo">
+                <label for="pedido-desconto">Desconto (%)</label>
+                <input id="pedido-desconto" name="desconto" type="number" min="0" max="100" value="0" required>
+            </div>
+            <div class="campo">
+                <label for="pedido-pagamento">Forma de pagamento</label>
+                <select id="pedido-pagamento" name="formaPagamento" required></select>
+            </div>
+            <div class="campo" id="campo-parcelas" hidden>
+                <label for="pedido-parcelas">Parcelas</label>
+                <input id="pedido-parcelas" name="parcelas" type="number" min="1" max="10" value="1">
+            </div>
+            <div class="campo campo-largo">
+                <label for="pedido-endereco">Endereço de entrega</label>
+                <input id="pedido-endereco" name="endereco" required maxlength="150">
+            </div>
+            <p class="campo-largo total-previsto">Total: <strong id="pedido-total">R$ 0,00</strong></p>
+            <div class="acoes-formulario">
+                <button type="submit" class="botao">Realizar pedido</button>
+            </div>
+        </form>
+        <div class="tabela-rolavel">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Data</th>
+                    <th>Cliente</th>
+                    <th>Itens</th>
+                    <th>Desconto</th>
+                    <th>Total</th>
+                    <th>Pagamento</th>
+                    <th>Entrega</th>
+                    <th>Situação</th>
+                </tr>
+                </thead>
+                <tbody id="lista-pedidos"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <p class="restaurar">
+        Os dados ficam salvos neste navegador.
+        <button type="button" class="botao-secundario" id="restaurar-exemplo">Restaurar dados de exemplo</button>
+    </p>
+</main>
+
+<footer class="rodape">
+    <div class="conteudo">
+        <p>&copy; 2024 A3 - Modelos, métodos e técnicas de engenharia de software. Projeto de estudo, sem vendas reais.</p>
+    </div>
+</footer>
+</body>
+</html>

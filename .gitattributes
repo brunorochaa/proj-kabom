@@ -1,2 +1,3 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Normaliza arquivos de texto com LF (igual ao .editorconfig)
+* text=auto eol=lf
+*.png binary

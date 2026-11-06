@@ -2,163 +2,171 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Pedidos</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Kabom: loja de videogames de estudo, com consoles de todas as gerações.">
+    <title>Kabom | Loja de videogames</title>
+    <link rel="icon" href="img/logo.png">
+    <link rel="stylesheet" href="css/loja.css">
+    <script src="js/dados-exemplo.js" defer></script>
+    <script src="js/util.js" defer></script>
+    <script src="js/dados.js" defer></script>
+    <script src="js/loja.js" defer></script>
 </head>
 <body>
-    <header>
-        <div class="logo-nav-container">
-            <img src="img/logo.png" alt="Logo da Loja">
-            <nav>
-                <a href="#clientes">Clientes</a>
-                <a href="#produtos">Produtos</a>
-                <a href="#pedidos">Pedidos</a>
-            </nav>
+<a class="pular" href="#vitrine">Pular para os produtos</a>
+
+<header class="topo">
+    <p class="faixa">10% de desconto no PIX &middot; até 10x sem juros no cartão</p>
+    <div class="topo-principal conteudo">
+        <a class="marca" href="index.html">
+            <span class="marca-icone"><img src="img/logo.png" alt=""></span>
+            <span class="marca-nome">KABOM<small>games</small></span>
+        </a>
+        <form class="busca" id="form-busca" role="search">
+            <label class="so-leitor" for="busca">Buscar produtos</label>
+            <input id="busca" name="busca" type="search" placeholder="Busque por console, marca..." autocomplete="off">
+            <button type="submit" aria-label="Buscar">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+            </button>
+        </form>
+        <nav class="atalhos" aria-label="Conta e carrinho">
+            <a class="atalho" href="admin.html">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+                <span>Admin</span>
+            </a>
+            <button class="atalho" type="button" id="abrir-carrinho" aria-haspopup="dialog">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.4 11h11l2.1-8H6.2"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
+                <span>Carrinho</span>
+                <span class="contador" id="contador-carrinho" aria-label="0 itens">0</span>
+            </button>
+        </nav>
+    </div>
+    <nav class="categorias" aria-label="Categorias">
+        <div class="conteudo" id="lista-categorias"></div>
+    </nav>
+</header>
+
+<main class="conteudo">
+    <section class="banner" aria-labelledby="titulo-banner">
+        <div class="banner-texto">
+            <p class="selo">Semana Ninja</p>
+            <h1 id="titulo-banner">Consoles de todas as gerações</h1>
+            <p>Do Nintendinho ao PlayStation 5, com 10% de desconto pagando no PIX.</p>
+            <a class="botao" href="#vitrine">Ver produtos</a>
         </div>
-    </header>   
+        <img class="banner-ninja" src="img/logo.png" alt="">
+    </section>
 
-    <main>
-        <!-- Seção de Clientes -->
-        <section id="clientes">
-            <h2>Clientes</h2>
-            <form id="formCliente" style="display: none;" onsubmit="adicionarCliente(event)">
-                <label for="nomeCliente">Nome:</label>
-                <input type="text" id="nomeCliente" required>
+    <ul class="vantagens">
+        <li><strong>10% off no PIX</strong><span>desconto aplicado no carrinho</span></li>
+        <li><strong>Até 10x sem juros</strong><span>no cartão de crédito</span></li>
+        <li><strong>Compra de mentirinha</strong><span>projeto de estudo, nada é cobrado</span></li>
+    </ul>
 
-                <label for="telefoneCliente">Telefone:</label>
-                <input type="text" id="telefoneCliente" required>
-
-                <label for="emailCliente">Email:</label>
-                <input type="email" id="emailCliente" required>
-
-                <label for="identificadorjCliente">CPF/CNPJ:</label>
-                <input type="text" id="identificadorCliente" required>
-
-                <label for="enderecoCliente">Endereço:</label>
-                <input type="text" id="enderecoCliente" required>
-                
-                <button type="submit">Adicionar</button>
-            </form>
-            <table id="tabelaClientes">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Telefone</th>
-                        <th>Email</th>
-                        <th>CPF/CNPJ</th>
-                        <th>Endereço</th>
-                        <th>Editar</th>
-                        <th>Remover</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Aqui serão inseridos dinamicamente os clientes -->
-                </tbody>
-            </table>
-        </section>
-
-        <!-- Seção de Produtos -->
-        <section id="produtos">
-            <h2>Produtos</h2>
-            <form id="formProduto" style="display: none;" onsubmit="adicionarProduto(event)">
-                <label for="nomeProduto">Nome:</label>
-                <input type="text" id="nomeProduto" required>
-
-                <label for="categoriaProduto">Categoria:</label>
-                <input type="text" id="categoriaProduto" required>
-
-                <label for="precoProduto">Preço:</label>
-                <input type="number" id="precoProduto" min="0" step="0.01" required>
-
-                <label for="imagemProduto">URL da Imagem:</label>
-                <input type="text" id="imagemProduto" required>
-
-                <button type="submit">Adicionar</button>
-            </form>
-            <table id="tabelaProdutos">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Categoria</th>
-                        <th>Preço</th>
-                        <th>Imagem</th>
-                        <th>Editar</th>
-                        <th>Remover</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Aqui serão inseridos dinamicamente os produtos -->
-                </tbody>
-            </table>
-        </section>
-
-        <!-- Seção de Pedidos -->
-        <section id="pedidos">
-            <h2>Pedidos</h2>
-            <form id="formPedido" style="display: none;" onsubmit="realizarPedido(event)">
-                <label for="clientePedido">Cliente:</label>
-                <select id="clientePedido" required>
-                    <option value="">Selecione o cliente</option>
+    <section id="vitrine" class="vitrine" aria-labelledby="titulo-vitrine">
+        <div class="barra-vitrine">
+            <div>
+                <h2 id="titulo-vitrine">Todos os produtos</h2>
+                <p class="resultado" id="resultado" aria-live="polite"></p>
+            </div>
+            <label class="ordenar">
+                Ordenar por
+                <select id="ordenar">
+                    <option value="relevancia">Mais relevantes</option>
+                    <option value="menor-preco">Menor preço</option>
+                    <option value="maior-preco">Maior preço</option>
+                    <option value="nome">Nome (A-Z)</option>
                 </select>
+            </label>
+        </div>
+        <ul class="grade-produtos" id="lista-produtos"></ul>
+        <div class="vitrine-vazia" id="vitrine-vazia" hidden>
+            <p>Nenhum produto encontrado.</p>
+            <button type="button" class="botao" id="limpar-filtros">Ver todos os produtos</button>
+        </div>
+    </section>
+</main>
 
-                <label for="produtosPedido">Produto:</label>
-                <select id="produtosPedido" required>
-                    <option value="">Selecione o produto</option>
-                </select>
+<footer class="rodape">
+    <div class="conteudo">
+        <p><strong>Kabom</strong> é um projeto de estudo (A3 de Modelos, Métodos e Técnicas de Engenharia de Software, 2024). Nenhuma compra é cobrada e os pedidos ficam só neste navegador.</p>
+        <p>Fotos dos produtos: Wikimedia Commons, em domínio público ou CC BY-SA (<a href="img/produtos/CREDITOS.md">créditos</a>). As marcas pertencem aos seus donos.</p>
+    </div>
+</footer>
 
-                <label for="quantidadeProduto">Quantidade:</label>
-                <input type="number" id="quantidadeProduto" min="1" value="1" required>
+<dialog class="gaveta" id="carrinho" aria-labelledby="titulo-carrinho">
+    <div class="gaveta-topo">
+        <h2 id="titulo-carrinho">Meu carrinho</h2>
+        <button type="button" class="fechar" data-acao="fechar" aria-label="Fechar carrinho">&times;</button>
+    </div>
 
-                <label for="descontoProduto">Desconto (%):</label>
-                <input type="number" id="descontoProduto" min="0" value="0" required>
+    <div class="etapa" data-etapa="itens">
+        <ul class="itens-carrinho" id="itens-carrinho"></ul>
+        <div class="carrinho-vazio" id="carrinho-vazio">
+            <p>Seu carrinho está vazio.</p>
+            <button type="button" class="botao" data-acao="fechar">Escolher produtos</button>
+        </div>
+        <div class="resumo" id="resumo-carrinho">
+            <p class="linha-resumo"><span>Subtotal</span><span id="carrinho-subtotal"></span></p>
+            <p class="linha-resumo destaque"><span>No PIX</span><span id="carrinho-pix"></span></p>
+            <p class="parcelado" id="carrinho-parcelado"></p>
+            <button type="button" class="botao botao-grande" data-acao="finalizar">Finalizar compra</button>
+            <button type="button" class="botao-texto" data-acao="fechar">Continuar comprando</button>
+        </div>
+    </div>
 
-                <!-- Adicione um select para a forma de pagamento -->
-                <label for="formaPagamento">Forma de Pagamento:</label>
-                <select id="formaPagamento" required>
-                    <option value="">Selecione a forma de pagamento</option>
-                    <option value="pix">PIX</option>
-                    <option value="boleto">Boleto</option>
-                    <option value="cartaoCredito">Cartão de Crédito</option>
-                    <option value="cartaoDebito">Cartão de Débito</option>
-                </select>
-                <!-- Campo para parcelas, visível apenas se a forma de pagamento for Cartão de Crédito -->
-                <label for="parcelas" id="parcelasLabel" style="display: none;">Parcelas:</label>
-                <input type="number" id="parcelas" name="parcelas" min="1" max="12" style="display: none;">
+    <form class="etapa" data-etapa="checkout" id="form-checkout" hidden>
+        <fieldset>
+            <legend>Seus dados</legend>
+            <div class="campo">
+                <label for="checkout-nome">Nome completo</label>
+                <input id="checkout-nome" name="nome" required maxlength="100" autocomplete="name">
+            </div>
+            <div class="campo">
+                <label for="checkout-email">E-mail</label>
+                <input id="checkout-email" name="email" type="email" required maxlength="100" autocomplete="email">
+            </div>
+            <div class="campos-lado">
+                <div class="campo">
+                    <label for="checkout-telefone">Telefone</label>
+                    <input id="checkout-telefone" name="telefone" type="tel" required maxlength="20" autocomplete="tel">
+                </div>
+                <div class="campo">
+                    <label for="checkout-documento">CPF</label>
+                    <input id="checkout-documento" name="documento" required maxlength="18" inputmode="numeric">
+                </div>
+            </div>
+            <div class="campo">
+                <label for="checkout-endereco">Endereço de entrega</label>
+                <input id="checkout-endereco" name="endereco" required maxlength="150" autocomplete="street-address">
+            </div>
+        </fieldset>
 
-                <label for="enderecoEntrega">Endereço de Entrega:</label>
-                <input type="text" id="enderecoEntrega" required>
+        <fieldset>
+            <legend>Pagamento</legend>
+            <div class="opcoes-pagamento" id="opcoes-pagamento"></div>
+            <div class="campo" id="campo-parcelas" hidden>
+                <label for="checkout-parcelas">Parcelas</label>
+                <select id="checkout-parcelas" name="parcelas"></select>
+            </div>
+        </fieldset>
 
-                <button type="submit">Realizar Pedido</button>
-            </form>
-            <table id="tabelaPedidos">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Cliente</th>
-                        <th>Produtos</th>
-                        <th>Quantidade</th>
-                        <th>Desconto (%)</th>
-                        <th>Data</th>
-                        <th>Endereço de Entrega</th>
-                        <th>Estado do Pedido</th>
-                        <th>Status do Pedido</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Aqui serão inseridos dinamicamente os pedidos -->
-                </tbody>
-            </table>
-            
-        </section>
-    </main>
+        <div class="resumo">
+            <p class="linha-resumo destaque"><span>Total</span><span id="checkout-total"></span></p>
+            <button type="submit" class="botao botao-grande">Confirmar pedido</button>
+            <button type="button" class="botao-texto" data-acao="voltar">Voltar ao carrinho</button>
+        </div>
+    </form>
 
-    <footer>
-        &copy; 2024 A3 - Modelos , métodos e técnicas de engenharia de software.
-    </footer>
+    <div class="etapa confirmacao" data-etapa="confirmacao" hidden>
+        <div class="confirmacao-icone" aria-hidden="true">&#10003;</div>
+        <h3 id="confirmacao-titulo" tabindex="-1"></h3>
+        <p id="confirmacao-texto"></p>
+        <p class="nota">Acompanhe e mude a situação do pedido na <a href="admin.html#pedidos">área administrativa</a>.</p>
+        <button type="button" class="botao botao-grande" data-acao="fechar">Continuar comprando</button>
+    </div>
+</dialog>
 
-    <script src="js/scripts.js"></script>
+<div class="aviso-flutuante" id="aviso" role="status" aria-live="polite"></div>
 </body>
 </html>

@@ -1,0 +1,239 @@
+/* Área administrativa: usa a base da loja (css/loja.css) e acrescenta painéis, formulários e tabelas. */
+
+/* ---------- Topo ---------- */
+
+.topo-admin {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
+    padding-block: 14px;
+}
+
+.menu-admin {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+}
+
+.menu-admin a:not(.botao) {
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.menu-admin a:not(.botao):hover {
+    background: var(--tinta-2);
+}
+
+.menu-admin .botao {
+    margin-left: 8px;
+    padding: 8px 16px;
+}
+
+/* ---------- Painéis ---------- */
+
+.admin {
+    padding-block: 24px 40px;
+}
+
+.painel {
+    margin-bottom: 24px;
+    padding: 20px;
+    border-radius: var(--raio);
+    background: var(--superficie);
+    box-shadow: var(--sombra);
+    scroll-margin-top: 16px;
+}
+
+.painel h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+}
+
+.painel h2::before {
+    content: '';
+    width: 6px;
+    height: 24px;
+    border-radius: 3px;
+    background: var(--laranja);
+}
+
+/* ---------- Formulários ---------- */
+
+.formulario {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px 16px;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--borda);
+}
+
+.campo-largo,
+.acoes-formulario {
+    grid-column: 1 / -1;
+}
+
+.acoes-formulario {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.total-previsto {
+    font-size: 1.1rem;
+}
+
+.total-previsto strong {
+    color: var(--laranja-forte);
+    font-size: 1.3rem;
+}
+
+.botao-secundario {
+    padding: 10px 18px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    background: var(--superficie);
+    font-weight: 600;
+}
+
+.botao-secundario:hover {
+    border-color: var(--laranja);
+    color: var(--laranja-forte);
+}
+
+/* ---------- Tabelas ---------- */
+
+.tabela-rolavel {
+    overflow-x: auto;
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+}
+
+th,
+td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--borda);
+    text-align: left;
+    vertical-align: middle;
+}
+
+th {
+    background: var(--fundo);
+    color: var(--texto-suave);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+tbody tr:hover {
+    background: var(--laranja-claro);
+}
+
+td.vazio {
+    padding: 28px;
+    color: var(--texto-suave);
+    text-align: center;
+}
+
+.miniatura {
+    width: 64px;
+    height: 44px;
+    object-fit: contain;
+}
+
+.sem-imagem {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+}
+
+.acoes-linha {
+    display: flex;
+    gap: 6px;
+}
+
+.acoes-linha button {
+    padding: 6px 12px;
+    border: 1px solid var(--borda);
+    border-radius: 6px;
+    background: var(--superficie);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.acoes-linha button:hover {
+    border-color: var(--laranja);
+    color: var(--laranja-forte);
+}
+
+.acoes-linha button.perigo {
+    color: var(--perigo);
+}
+
+.acoes-linha button.perigo:hover {
+    border-color: var(--perigo);
+    background: var(--perigo);
+    color: #fff;
+}
+
+select.situacao {
+    padding: 6px 8px;
+    border: 1px solid var(--borda);
+    border-radius: 6px;
+    background: var(--superficie);
+    font-weight: 600;
+}
+
+.pedido-pendente select.situacao {
+    border-color: #e0a100;
+    color: #9a6b00;
+}
+
+.pedido-quitado select.situacao {
+    border-color: var(--verde);
+    color: var(--verde);
+}
+
+.pedido-cancelado td {
+    color: var(--texto-suave);
+}
+
+.pedido-cancelado select.situacao {
+    border-color: var(--perigo);
+    color: var(--perigo);
+}
+
+/* ---------- Rodapé da área ---------- */
+
+.restaurar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    color: var(--texto-suave);
+}
+
+@media (min-width: 760px) {
+    .painel {
+        padding: 28px;
+    }
+}
