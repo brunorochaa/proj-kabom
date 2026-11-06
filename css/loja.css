@@ -178,34 +178,34 @@ a {
 
 .marca-icone {
     display: grid;
-    place-items: center;
-    width: 44px;
-    height: 44px;
+    flex: none;
+    place-items: end center;
+    width: 48px;
+    height: 48px;
     overflow: hidden;
     border-radius: 50%;
     background: var(--laranja);
 }
 
+/* O ninja aparece da cabeça aos ombros, centralizado e sem encostar na borda do círculo. */
 .marca-icone img {
-    width: 40px;
-    margin-top: 6px;
+    width: 100%;
+    height: 100%;
+    padding: 5px 4px 0;
+    object-fit: contain;
+    object-position: center bottom;
 }
 
+/* Fonte da marca: pesada e inclinada, só com fontes que já vêm no sistema (sem baixar nada). */
 .marca-nome {
     display: flex;
     flex-direction: column;
-    font-size: 1.5rem;
-    font-weight: 800;
-    letter-spacing: -0.5px;
+    font-family: 'Segoe UI Black', 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 1.75rem;
+    font-style: italic;
+    font-weight: 900;
+    letter-spacing: 0;
     line-height: 1;
-}
-
-.marca-nome small {
-    color: var(--laranja);
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
 }
 
 .busca {
@@ -959,4 +959,318 @@ legend {
         transition: none !important;
         scroll-behavior: auto !important;
     }
+}
+
+/* ---------- Ofertas, favoritos e detalhes ---------- */
+
+.banner-acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.botao-claro {
+    border: 1px solid #55555f;
+    background: none;
+}
+
+.botao-claro:hover {
+    border-color: var(--laranja);
+    background: none;
+}
+
+.chip-oferta {
+    border-color: var(--laranja);
+    color: #ffb27a;
+}
+
+.chip-oferta[aria-pressed='true'] {
+    color: #fff;
+}
+
+.atalho[aria-pressed='true'] {
+    background: var(--tinta-2);
+    color: var(--laranja);
+}
+
+.atalho[aria-pressed='true'] svg {
+    fill: var(--laranja);
+}
+
+.cartao-foto {
+    position: relative;
+}
+
+.selo-oferta {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--verde);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 800;
+}
+
+.botao-favorito {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--superficie);
+    color: var(--texto-suave);
+    box-shadow: var(--sombra);
+}
+
+.botao-favorito svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linejoin: round;
+}
+
+.botao-favorito:hover {
+    color: var(--laranja-forte);
+}
+
+.botao-favorito[aria-pressed='true'] {
+    color: var(--laranja);
+}
+
+.botao-favorito[aria-pressed='true'] svg {
+    fill: currentColor;
+}
+
+/* O botão com o nome do produto estica até cobrir o cartão inteiro, deixando-o clicável. */
+.cartao-produto {
+    position: relative;
+}
+
+.cartao-link {
+    padding: 0;
+    border: 0;
+    background: none;
+    font-weight: inherit;
+    text-align: left;
+}
+
+.cartao-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--raio);
+}
+
+.cartao-link:focus-visible {
+    outline: none;
+}
+
+.cartao-link:focus-visible::after {
+    outline: 3px solid var(--laranja);
+    outline-offset: 2px;
+}
+
+.botao-comprar,
+.botao-favorito {
+    position: relative;
+    z-index: 1;
+}
+
+.botao-favorito {
+    position: absolute;
+}
+
+.preco-antigo {
+    color: var(--texto-suave);
+    font-size: 0.75rem;
+}
+
+.dica {
+    display: block;
+    margin-top: 4px;
+    color: var(--texto-suave);
+    font-size: 0.75rem;
+}
+
+.janela {
+    width: min(100% - 24px, 760px);
+    max-height: calc(100% - 24px);
+    padding: 0;
+    border: 0;
+    border-radius: var(--raio);
+    background: var(--superficie);
+    color: var(--texto);
+    overflow-y: auto;
+}
+
+.janela::backdrop {
+    background: rgba(10, 10, 15, 0.55);
+}
+
+.fechar-janela {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 2;
+    background: var(--fundo);
+    color: var(--texto);
+}
+
+.fechar-janela:hover {
+    background: var(--borda);
+}
+
+.detalhes {
+    display: grid;
+    gap: 16px;
+    padding: 24px 20px 20px;
+}
+
+.detalhes-foto {
+    position: relative;
+}
+
+.detalhes-info {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+}
+
+.detalhes-info h2 {
+    font-size: 1.5rem;
+    line-height: 1.15;
+}
+
+.detalhes-descricao {
+    color: var(--texto-suave);
+}
+
+.detalhes-precos .preco-pix {
+    font-size: 1.7rem;
+}
+
+.parcelas {
+    margin-top: 8px;
+    font-size: 0.85rem;
+}
+
+.parcelas summary {
+    cursor: pointer;
+    color: var(--laranja-forte);
+    font-weight: 600;
+}
+
+.parcelas ul {
+    display: grid;
+    gap: 2px;
+    margin-top: 6px;
+    padding: 0;
+    list-style: none;
+}
+
+.parcelas li {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.parcelas li:nth-child(odd) {
+    background: var(--fundo);
+}
+
+.detalhes-compra {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.detalhes-compra .botao-grande {
+    flex: 1;
+}
+
+.botao-favorito-grande {
+    position: static;
+    border: 1px solid var(--borda);
+    box-shadow: none;
+}
+
+@media (min-width: 640px) {
+    .detalhes {
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+        padding: 32px;
+        align-items: center;
+    }
+}
+
+/* ---------- Meus pedidos ---------- */
+
+.consulta-pedidos {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.lista-pedidos {
+    display: grid;
+    gap: 12px;
+    margin-top: 12px;
+    padding: 0;
+    list-style: none;
+}
+
+.pedido {
+    padding: 14px;
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+}
+
+.pedido-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pedido-data {
+    color: var(--texto-suave);
+    font-size: 0.8rem;
+}
+
+.pedido-itens {
+    margin-block: 8px;
+    padding-left: 18px;
+    font-size: 0.9rem;
+}
+
+.etiqueta {
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.etiqueta-pendente {
+    background: #fff4d6;
+    color: #9a6b00;
+}
+
+.etiqueta-quitado {
+    background: #dff5e8;
+    color: var(--verde);
+}
+
+.etiqueta-cancelado {
+    background: #fbe3e3;
+    color: var(--perigo);
 }

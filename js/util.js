@@ -51,3 +51,53 @@ function preencherSelect(select, opcoes, textoVazio) {
     );
     select.value = opcoes.some((opcao) => String(opcao.valor) === valorAtual) ? valorAtual : '';
 }
+
+// ---------- Máscaras e validação ----------
+
+function soDigitos(texto) {
+    return String(texto ?? '').replace(/\D/g, '');
+}
+
+/** "52998224725" vira "529.982.247-25" (formata enquanto digita). */
+function mascaraCpf(texto) {
+    return soDigitos(texto).slice(0, 11)
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+}
+
+/** "31987654321" vira "(31) 98765-4321"; fixo com 10 dígitos vira "(11) 1234-5678". */
+function mascaraTelefone(texto) {
+    const digitos = soDigitos(texto).slice(0, 11);
+    if (digitos.length <= 2) {
+        return digitos.length ? `(${digitos}` : '';
+    }
+    const meio = digitos.length === 11 ? 5 : 4;
+    const ddd = `(${digitos.slice(0, 2)}) `;
+    const resto = digitos.slice(2);
+    return resto.length > meio ? `${ddd}${resto.slice(0, meio)}-${resto.slice(meio)}` : ddd + resto;
+}
+
+/** Confere os dois dígitos verificadores do CPF. */
+function cpfValido(texto) {
+    const digitos = soDigitos(texto);
+    if (digitos.length !== 11 || /^(\d)\1+$/.test(digitos)) {
+        return false;
+    }
+    const verificador = (tamanho) => {
+        let soma = 0;
+        for (let indice = 0; indice < tamanho; indice += 1) {
+            soma += Number(digitos[indice]) * (tamanho + 1 - indice);
+        }
+        const resto = (soma * 10) % 11;
+        return resto === 10 ? 0 : resto;
+    };
+    return verificador(9) === Number(digitos[9]) && verificador(10) === Number(digitos[10]);
+}
+
+/** Aplica a máscara enquanto a pessoa digita no campo. */
+function aplicarMascara(campo, mascara) {
+    campo.addEventListener('input', () => {
+        campo.value = mascara(campo.value);
+    });
+}

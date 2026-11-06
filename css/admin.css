@@ -237,3 +237,117 @@ select.situacao {
         padding: 28px;
     }
 }
+
+/* ---------- Abas, resumo e listas ---------- */
+
+.menu-admin a[aria-current='page'] {
+    background: var(--tinta-2);
+    box-shadow: inset 0 -3px 0 var(--laranja);
+}
+
+.indicadores {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+    padding: 0;
+    list-style: none;
+}
+
+.indicador {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 14px 16px;
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+}
+
+.indicador.destaque {
+    border-color: var(--laranja);
+    background: var(--laranja-claro);
+}
+
+.indicador-rotulo {
+    color: var(--texto-suave);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.indicador strong {
+    font-size: 1.5rem;
+}
+
+.indicador small {
+    color: var(--texto-suave);
+}
+
+.subtitulo {
+    margin-bottom: 10px;
+    font-size: 1.05rem;
+}
+
+.barra-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.barra-lista input,
+.barra-lista select {
+    padding: 10px 12px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    background: var(--superficie);
+}
+
+.barra-lista input {
+    flex: 1 1 240px;
+}
+
+/* Formulário recolhível: fica fechado até clicar em "Novo ..." ou em "Editar". */
+.novo {
+    margin-bottom: 20px;
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+}
+
+.novo > summary {
+    padding: 12px 16px;
+    cursor: pointer;
+    font-weight: 700;
+    list-style: none;
+}
+
+.novo > summary::before {
+    content: '+';
+    display: inline-block;
+    width: 1.2em;
+    color: var(--laranja-forte);
+}
+
+.novo[open] > summary::before {
+    content: '\2212';
+}
+
+.novo[open] > summary {
+    border-bottom: 1px solid var(--borda);
+}
+
+.novo .formulario {
+    margin: 0;
+    padding: 16px;
+    border-bottom: 0;
+}
+
+.tag-oferta {
+    color: var(--verde);
+    font-weight: 700;
+}
+
+.restaurar {
+    margin-top: 24px;
+}

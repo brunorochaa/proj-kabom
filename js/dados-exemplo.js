@@ -1,4 +1,5 @@
 // Dados usados na primeira vez que o sistema abre (ou ao clicar em "Restaurar dados de exemplo").
+// precoAntigo (opcional) é o preço "de" das ofertas.
 // Fotos em img/produtos (créditos em img/produtos/CREDITOS.md).
 const DADOS_EXEMPLO = {
     clientes: [
@@ -7,27 +8,35 @@ const DADOS_EXEMPLO = {
             nome: 'João Silva',
             telefone: '(11) 1234-5678',
             email: 'joao@example.com',
-            documento: '123.456.789-00',
+            documento: '123.456.789-09',
             endereco: 'Rua das Flores, 123, São Paulo - SP',
+        },
+        {
+            id: 2,
+            nome: 'Maria Oliveira',
+            telefone: '(31) 98765-4321',
+            email: 'maria@example.com',
+            documento: '529.982.247-25',
+            endereco: 'Av. Afonso Pena, 1500, Belo Horizonte - MG',
         },
     ],
     produtos: [
         { id: 1, nome: 'Xbox', categoria: 'Xbox', descricao: 'Console clássico de 2001, com controle', preco: 500, imagem: 'img/produtos/xbox.jpg' },
         { id: 2, nome: 'Xbox 360', categoria: 'Xbox', descricao: 'Modelo Pro com controle sem fio', preco: 800, imagem: 'img/produtos/xbox-360.jpg' },
         { id: 3, nome: 'Xbox One', categoria: 'Xbox', descricao: 'Console com controle e sensor Kinect', preco: 2700, imagem: 'img/produtos/xbox-one.jpg' },
-        { id: 4, nome: 'Xbox Series X', categoria: 'Xbox', descricao: '1 TB SSD, jogos em 4K', preco: 3700, imagem: 'img/produtos/xbox-series-x.png' },
+        { id: 4, nome: 'Xbox Series X', categoria: 'Xbox', descricao: '1 TB SSD, jogos em 4K', preco: 3700, precoAntigo: 4300, imagem: 'img/produtos/xbox-series-x.png' },
         { id: 5, nome: 'Nintendinho', categoria: 'Nintendo', descricao: 'NES com controle e pistola Zapper', preco: 150, imagem: 'img/produtos/nintendinho.jpg' },
-        { id: 6, nome: 'Super Nintendo', categoria: 'Nintendo', descricao: 'Console 16 bits com controle', preco: 250, imagem: 'img/produtos/super-nintendo.jpg' },
+        { id: 6, nome: 'Super Nintendo', categoria: 'Nintendo', descricao: 'Console 16 bits com controle', preco: 250, precoAntigo: 320, imagem: 'img/produtos/super-nintendo.jpg' },
         { id: 7, nome: 'Nintendo 64', categoria: 'Nintendo', descricao: 'Console com controle original', preco: 300, imagem: 'img/produtos/nintendo-64.png' },
         { id: 8, nome: 'GameCube', categoria: 'Nintendo', descricao: 'Console roxo com controle', preco: 700, imagem: 'img/produtos/gamecube.png' },
-        { id: 9, nome: 'Nintendo Wii', categoria: 'Nintendo', descricao: 'Console com Wii Remote', preco: 800, imagem: 'img/produtos/wii.jpg' },
+        { id: 9, nome: 'Nintendo Wii', categoria: 'Nintendo', descricao: 'Console com Wii Remote', preco: 800, precoAntigo: 950, imagem: 'img/produtos/wii.jpg' },
         { id: 10, nome: 'Nintendo Wii U', categoria: 'Nintendo', descricao: 'Console com Wii U GamePad', preco: 1800, imagem: 'img/produtos/wii-u.png' },
-        { id: 11, nome: 'Nintendo Switch', categoria: 'Nintendo', descricao: 'Com dock e Joy-Con neon', preco: 2000, imagem: 'img/produtos/switch.jpg' },
+        { id: 11, nome: 'Nintendo Switch', categoria: 'Nintendo', descricao: 'Com dock e Joy-Con neon', preco: 2000, precoAntigo: 2400, imagem: 'img/produtos/switch.jpg' },
         { id: 12, nome: 'PlayStation', categoria: 'PlayStation', descricao: 'O primeiro PlayStation, com controle', preco: 350, imagem: 'img/produtos/playstation.png' },
         { id: 13, nome: 'PlayStation 2', categoria: 'PlayStation', descricao: 'Modelo fat com controle DualShock 2', preco: 500, imagem: 'img/produtos/playstation-2.jpg' },
         { id: 14, nome: 'PlayStation 3', categoria: 'PlayStation', descricao: 'Modelo slim com controle', preco: 1300, imagem: 'img/produtos/playstation-3.jpg' },
-        { id: 15, nome: 'PlayStation 4', categoria: 'PlayStation', descricao: 'Console com controle DualShock 4', preco: 2500, imagem: 'img/produtos/playstation-4.jpg' },
-        { id: 16, nome: 'PlayStation 5', categoria: 'PlayStation', descricao: 'Edição com leitor de disco e DualSense', preco: 5000, imagem: 'img/produtos/playstation-5.jpg' },
+        { id: 15, nome: 'PlayStation 4', categoria: 'PlayStation', descricao: 'Console com controle DualShock 4', preco: 2500, precoAntigo: 2900, imagem: 'img/produtos/playstation-4.jpg' },
+        { id: 16, nome: 'PlayStation 5', categoria: 'PlayStation', descricao: 'Edição com leitor de disco e DualSense', preco: 5000, precoAntigo: 5800, imagem: 'img/produtos/playstation-5.jpg' },
     ],
     pedidos: [
         {
@@ -43,6 +52,35 @@ const DADOS_EXEMPLO = {
             parcelas: null,
             endereco: 'Rua das Flores, 123, São Paulo - SP',
             situacao: 'Quitado',
+        },
+        {
+            id: 2,
+            data: '2024-07-02T10:15:00',
+            clienteId: 2,
+            clienteNome: 'Maria Oliveira',
+            itens: [
+                { produtoId: 11, produtoNome: 'Nintendo Switch', precoUnitario: 2000, quantidade: 1 },
+                { produtoId: 6, produtoNome: 'Super Nintendo', precoUnitario: 250, quantidade: 1 },
+            ],
+            desconto: 0,
+            formaPagamento: 'cartaoCredito',
+            parcelas: 5,
+            endereco: 'Av. Afonso Pena, 1500, Belo Horizonte - MG',
+            situacao: 'Quitado',
+        },
+        {
+            id: 3,
+            data: '2024-07-05T19:40:00',
+            clienteId: 2,
+            clienteNome: 'Maria Oliveira',
+            itens: [
+                { produtoId: 16, produtoNome: 'PlayStation 5', precoUnitario: 5000, quantidade: 1 },
+            ],
+            desconto: 10,
+            formaPagamento: 'pix',
+            parcelas: null,
+            endereco: 'Av. Afonso Pena, 1500, Belo Horizonte - MG',
+            situacao: 'Pendente',
         },
     ],
 };

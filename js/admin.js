@@ -6,10 +6,86 @@ function atualizarTudo() {
 }
 
 function renderizarTela() {
+    renderizarResumo();
     renderizarClientes();
     renderizarProdutos();
     renderizarPedidos();
     atualizarOpcoesPedido();
+    aplicarFiltros();
+}
+
+// ---------- Abas (uma seção por vez, escolhida pelo # do endereço) ----------
+
+const ABAS = ['resumo', 'clientes', 'produtos', 'pedidos'];
+
+function mostrarAba() {
+    const escolhida = ABAS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'resumo';
+    document.querySelectorAll('main [data-aba]').forEach((secao) => {
+        secao.hidden = secao.dataset.aba !== escolhida;
+    });
+    document.querySelectorAll('.menu-admin a[data-aba]').forEach((link) => {
+        if (link.dataset.aba === escolhida) {
+            link.setAttribute('aria-current', 'page');
+        } else {
+            link.removeAttribute('aria-current');
+        }
+    });
+}
+
+// ---------- Busca e filtro das tabelas ----------
+
+function normalizarTexto(texto) {
+    return String(texto ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+}
+
+/** Esconde as linhas que não combinam com a busca (e com a situação, nos pedidos). */
+function aplicarFiltros() {
+    const situacao = document.getElementById('filtro-situacao').value;
+    document.querySelectorAll('input[data-busca]').forEach((campo) => {
+        const termo = normalizarTexto(campo.value.trim());
+        document.getElementById(campo.dataset.busca).querySelectorAll('tr').forEach((linha) => {
+            if (linha.querySelector('td.vazio')) {
+                return;
+            }
+            const combinaTexto = normalizarTexto(linha.textContent).includes(termo);
+            const combinaSituacao = campo.dataset.busca !== 'lista-pedidos' || !situacao
+                || linha.classList.contains('pedido-' + normalizarTexto(situacao));
+            linha.hidden = !(combinaTexto && combinaSituacao);
+        });
+    });
+}
+
+// ---------- Resumo ----------
+
+function renderizarResumo() {
+    const somaPor = (situacao) => dados.pedidos
+        .filter((pedido) => pedido.situacao === situacao)
+        .reduce((soma, pedido) => soma + totalPedido(pedido), 0);
+    const pendentes = dados.pedidos.filter((pedido) => pedido.situacao === 'Pendente').length;
+    const emOferta = dados.produtos.filter((produto) => percentualOferta(produto) > 0).length;
+    const indicadores = [
+        { rotulo: 'Recebido', valor: moeda(somaPor('Quitado')), nota: 'pedidos quitados', destaque: true },
+        { rotulo: 'A receber', valor: moeda(somaPor('Pendente')), nota: pendentes + ' pedido(s) pendente(s)' },
+        { rotulo: 'Pedidos', valor: dados.pedidos.length, nota: 'no total' },
+        { rotulo: 'Clientes', valor: dados.clientes.length, nota: 'cadastrados' },
+        { rotulo: 'Produtos', valor: dados.produtos.length, nota: emOferta + ' em oferta' },
+    ];
+    document.getElementById('indicadores').replaceChildren(...indicadores.map(({ rotulo, valor, nota, destaque }) => criar('li', { className: destaque ? 'indicador destaque' : 'indicador' },
+        criar('span', { className: 'indicador-rotulo' }, rotulo),
+        criar('strong', {}, valor),
+        criar('small', {}, nota),
+    )));
+
+    const recentes = [...dados.pedidos].reverse().slice(0, 5);
+    document.getElementById('lista-resumo-pedidos').replaceChildren(...(recentes.length === 0
+        ? [linhaVazia(5, 'Nenhum pedido realizado.')]
+        : recentes.map((pedido) => criar('tr', {},
+            celula(pedido.id),
+            celula(dataHora(pedido.data)),
+            celula(pedido.clienteNome),
+            celula(moeda(totalPedido(pedido))),
+            celula(criar('span', { className: 'etiqueta etiqueta-' + normalizarTexto(pedido.situacao) }, pedido.situacao)),
+        ))));
 }
 
 // ---------- Cadastros (clientes e produtos) ----------
@@ -26,8 +102,10 @@ function renderizarTela() {
 function configurarCadastro({ colecao, formulario, lista, montar, nomeItem }) {
     const botaoSalvar = formulario.querySelector('button[type="submit"]');
     const botaoCancelar = formulario.querySelector('[data-acao="cancelar"]');
+    const recolhivel = formulario.closest('details');
 
     function sairDaEdicao() {
+        recolhivel.open = false;
         formulario.reset();
         formulario.elements.id.value = '';
         botaoSalvar.textContent = 'Adicionar';
@@ -62,6 +140,7 @@ function configurarCadastro({ colecao, formulario, lista, montar, nomeItem }) {
             return;
         }
         if (botao.dataset.acao === 'editar') {
+            formulario.reset();
             Object.entries(item).forEach(([campo, valor]) => {
                 if (formulario.elements[campo]) {
                     formulario.elements[campo].value = valor;
@@ -69,6 +148,8 @@ function configurarCadastro({ colecao, formulario, lista, montar, nomeItem }) {
             });
             botaoSalvar.textContent = 'Salvar alterações';
             botaoCancelar.hidden = false;
+            recolhivel.open = true;
+            recolhivel.scrollIntoView({ block: 'start' });
             formulario.elements[1].focus();
         } else if (botao.dataset.acao === 'remover' && confirm(`Remover ${nomeItem} "${item.nome}"?`)) {
             // Os pedidos guardam uma cópia do nome e do preço, então o histórico continua igual.
@@ -125,7 +206,7 @@ function renderizarProdutos() {
             celula(imagem),
             celula(produto.nome),
             celula(produto.categoria),
-            celula(moeda(produto.preco)),
+            celula(moeda(produto.preco), percentualOferta(produto) ? criar('small', { className: 'tag-oferta' }, ' -' + percentualOferta(produto) + '%') : ''),
             acoesLinha(produto.id),
         );
     }));
@@ -267,11 +348,23 @@ document.addEventListener('DOMContentLoaded', () => {
             categoria: valores.categoria.trim(),
             descricao: valores.descricao.trim(),
             preco: Number(valores.preco),
+            // Só vira oferta se o preço antigo for maior que o atual.
+            ...(Number(valores.precoAntigo) > Number(valores.preco) ? { precoAntigo: Number(valores.precoAntigo) } : {}),
             imagem: valores.imagem.trim(),
         }),
     });
 
     configurarPedidos();
+
+    aplicarMascara(document.getElementById('cliente-telefone'), mascaraTelefone);
+
+    const filtroSituacao = document.getElementById('filtro-situacao');
+    SITUACOES_PEDIDO.forEach((situacao) => filtroSituacao.append(criar('option', { value: situacao }, situacao)));
+    filtroSituacao.addEventListener('change', aplicarFiltros);
+    document.querySelectorAll('input[data-busca]').forEach((campo) => campo.addEventListener('input', aplicarFiltros));
+
+    window.addEventListener('hashchange', mostrarAba);
+    mostrarAba();
 
     document.getElementById('restaurar-exemplo').addEventListener('click', () => {
         if (confirm('Apagar os dados atuais e voltar aos dados de exemplo?')) {

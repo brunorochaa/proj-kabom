@@ -18,20 +18,51 @@
     <div class="conteudo topo-admin">
         <a class="marca" href="index.html" title="Voltar à loja">
             <span class="marca-icone"><img src="img/logo.png" alt=""></span>
-            <span class="marca-nome">KABOM<small>admin</small></span>
+            <span class="marca-nome">KABOM</span>
         </a>
         <nav class="menu-admin" aria-label="Seções">
-            <a href="#clientes">Clientes</a>
-            <a href="#produtos">Produtos</a>
-            <a href="#pedidos">Pedidos</a>
+            <a href="#resumo" data-aba="resumo">Resumo</a>
+            <a href="#clientes" data-aba="clientes">Clientes</a>
+            <a href="#produtos" data-aba="produtos">Produtos</a>
+            <a href="#pedidos" data-aba="pedidos">Pedidos</a>
             <a class="botao" href="index.html">Ver loja</a>
         </nav>
     </div>
 </header>
 
 <main class="conteudo admin">
-    <section class="painel" id="clientes">
+    <section class="painel" id="resumo" data-aba="resumo">
+        <h2>Resumo</h2>
+        <ul class="indicadores" id="indicadores"></ul>
+        <h3 class="subtitulo">Últimos pedidos</h3>
+        <div class="tabela-rolavel">
+            <table>
+                <thead>
+                <tr>
+                    <th>Nº</th>
+                    <th>Data</th>
+                    <th>Cliente</th>
+                    <th>Total</th>
+                    <th>Situação</th>
+                </tr>
+                </thead>
+                <tbody id="lista-resumo-pedidos"></tbody>
+            </table>
+        </div>
+        <p class="restaurar">
+            Os dados ficam salvos neste navegador.
+            <button type="button" class="botao-secundario" id="restaurar-exemplo">Restaurar dados de exemplo</button>
+        </p>
+    </section>
+
+    <section class="painel" id="clientes" data-aba="clientes" hidden>
         <h2>Clientes</h2>
+        <div class="barra-lista">
+            <label class="so-leitor" for="busca-clientes">Buscar clientes</label>
+            <input id="busca-clientes" type="search" placeholder="Buscar por nome, e-mail ou CPF..." data-busca="lista-clientes">
+        </div>
+        <details class="novo" id="novo-cliente">
+        <summary>Novo cliente</summary>
         <form id="form-cliente" class="formulario">
             <input type="hidden" name="id">
             <div class="campo">
@@ -59,6 +90,7 @@
                 <button type="button" class="botao-secundario" data-acao="cancelar" hidden>Cancelar edição</button>
             </div>
         </form>
+        </details>
         <div class="tabela-rolavel">
             <table>
                 <thead>
@@ -77,8 +109,14 @@
         </div>
     </section>
 
-    <section class="painel" id="produtos">
+    <section class="painel" id="produtos" data-aba="produtos" hidden>
         <h2>Produtos</h2>
+        <div class="barra-lista">
+            <label class="so-leitor" for="busca-produtos">Buscar produtos</label>
+            <input id="busca-produtos" type="search" placeholder="Buscar por nome ou categoria..." data-busca="lista-produtos">
+        </div>
+        <details class="novo" id="novo-produto">
+        <summary>Novo produto</summary>
         <form id="form-produto" class="formulario">
             <input type="hidden" name="id">
             <div class="campo">
@@ -98,6 +136,10 @@
                 <label for="produto-preco">Preço (R$)</label>
                 <input id="produto-preco" name="preco" type="number" min="0" step="0.01" required>
             </div>
+            <div class="campo">
+                <label for="produto-preco-antigo">Preço antigo (R$, opcional: vira oferta)</label>
+                <input id="produto-preco-antigo" name="precoAntigo" type="number" min="0" step="0.01">
+            </div>
             <div class="campo campo-largo">
                 <label for="produto-descricao">Descrição curta</label>
                 <input id="produto-descricao" name="descricao" maxlength="80">
@@ -111,6 +153,7 @@
                 <button type="button" class="botao-secundario" data-acao="cancelar" hidden>Cancelar edição</button>
             </div>
         </form>
+        </details>
         <div class="tabela-rolavel">
             <table>
                 <thead>
@@ -128,8 +171,18 @@
         </div>
     </section>
 
-    <section class="painel" id="pedidos">
+    <section class="painel" id="pedidos" data-aba="pedidos" hidden>
         <h2>Pedidos</h2>
+        <div class="barra-lista">
+            <label class="so-leitor" for="busca-pedidos">Buscar pedidos</label>
+            <input id="busca-pedidos" type="search" placeholder="Buscar por cliente ou produto..." data-busca="lista-pedidos">
+            <label class="so-leitor" for="filtro-situacao">Filtrar por situação</label>
+            <select id="filtro-situacao">
+                <option value="">Todas as situações</option>
+            </select>
+        </div>
+        <details class="novo" id="novo-pedido">
+        <summary>Novo pedido manual</summary>
         <form id="form-pedido" class="formulario">
             <div class="campo">
                 <label for="pedido-cliente">Cliente</label>
@@ -164,6 +217,7 @@
                 <button type="submit" class="botao">Realizar pedido</button>
             </div>
         </form>
+        </details>
         <div class="tabela-rolavel">
             <table>
                 <thead>
@@ -183,11 +237,6 @@
             </table>
         </div>
     </section>
-
-    <p class="restaurar">
-        Os dados ficam salvos neste navegador.
-        <button type="button" class="botao-secundario" id="restaurar-exemplo">Restaurar dados de exemplo</button>
-    </p>
 </main>
 
 <footer class="rodape">

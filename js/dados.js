@@ -1,7 +1,7 @@
 // Camada de dados compartilhada pela loja (index.html) e pela área administrativa (admin.html).
 // Tudo fica no localStorage do navegador, então as duas páginas enxergam os mesmos clientes, produtos e pedidos.
 
-const CHAVE_ARMAZENAMENTO = 'kabom:dados:v4';
+const CHAVE_ARMAZENAMENTO = 'kabom:dados:v5';
 
 const FORMAS_PAGAMENTO = {
     pix: 'PIX',
@@ -68,6 +68,11 @@ function acompanharOutrasAbas(aoMudar) {
 
 function precoPix(preco) {
     return preco * (1 - DESCONTO_PIX / 100);
+}
+
+/** Desconto (%) da oferta em relação ao preço antigo; 0 se o produto não está em oferta. */
+function percentualOferta(produto) {
+    return produto.precoAntigo > produto.preco ? Math.round((1 - produto.preco / produto.precoAntigo) * 100) : 0;
 }
 
 function subtotalItens(itens) {
