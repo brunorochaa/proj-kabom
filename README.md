@@ -2,6 +2,10 @@
 
 Loja online de videogames feita para a A3 da disciplina Modelos, Métodos e Técnicas de Engenharia de Software (2024) e refeita em 2026 no estilo das grandes lojas de tecnologia: vitrine, carrinho e finalização de compra, mais uma área administrativa. Roda direto no navegador, sem servidor nem instalação. É um projeto de estudo: nada é cobrado.
 
+| Loja | Área administrativa |
+| --- | --- |
+| ![Vitrine da loja](docs/imagens/loja.png) | ![Resumo da área administrativa](docs/imagens/admin.png) |
+
 ## O que faz
 
 **Loja (`index.html`)**
