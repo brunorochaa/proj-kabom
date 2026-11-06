@@ -31,6 +31,15 @@ HTML, CSS e JavaScript puros, sem bibliotecas nem etapa de build. Scripts cláss
 - Identidade própria (nome Kabom, ninja, cores laranja e grafite). A loja é inspirada em lojas de tecnologia, mas não copiar marca, logo ou layout de lojas reais.
 - Formatação: `.editorconfig` (4 espaços, LF, UTF-8).
 
+## README com prints
+
+- O `README.md` mostra o projeto com prints em `docs/imagens/` (PNG; 1280 de largura no computador, 500 no celular; poucos, só as telas principais), em tabelas lado a lado.
+- Só dados fictícios nas imagens: nada de nome, telefone, e-mail ou chave reais, e nada do serviço na tela.
+- Refaça os prints só quando a tela mudar de verdade: gere de novo e compare o tamanho do arquivo; se for idêntico, mantenha o antigo (evita inchar o repositório).
+- Como tirar: Chrome sem janela, `chrome.exe --headless=new --hide-scrollbars --window-size=1280,900 --virtual-time-budget=10000 --screenshot=<arquivo> <url>`, com um `--user-data-dir=<pasta temporária>` para cada print. Site estático abre por `file:///`; PHP sobe com `C:\Users\bruno\php\php.exe -S localhost:8000 -t public` (o PHP não está no PATH). O Chrome sem janela não passa de uns 500 de largura.
+- A rotina completa está na skill `/readme` do Claude Code.
+- Neste projeto: `index.html` (loja) e `admin.html` por `file:///`; os dados vêm do `localStorage` (o botão **Restaurar dados de exemplo** do admin volta ao padrão).
+
 ## Notas para futuros agentes
 
 - Reorganizado em 2026-11-06. Problemas corrigidos: XSS pelo `innerHTML`, ids repetidos (`length + 1`), "editar" que apagava e recriava o registro com outro id, tabelas que perdiam o cabeçalho e ficavam com colunas desalinhadas, desconto e parcelas que não apareciam, dados perdidos ao recarregar.
