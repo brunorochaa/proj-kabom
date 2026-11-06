@@ -30,11 +30,13 @@ As duas páginas usam os mesmos dados, salvos no navegador (`localStorage`). O p
 
 Abra o `index.html` no navegador (a loja). O link **Admin** no topo leva à área administrativa. Não precisa de servidor.
 
+O site também roda publicado no GitHub Pages, por ser só arquivos estáticos. Nesse caso, e também ao abrir o arquivo localmente, os dados (pedidos, clientes, favoritos e carrinho) ficam só no navegador de cada pessoa: quem visita o site não vê os pedidos de ninguém e o admin mostra apenas o que foi feito naquele navegador.
+
 ## Estrutura
 
 ```text
 index.html             # loja: vitrine, detalhes, carrinho, finalização e meus pedidos
-admin.html             # área administrativa: clientes, produtos e pedidos
+admin.html             # área administrativa: resumo, clientes, produtos e pedidos
 css/loja.css           # visual da loja (mobile first)
 css/admin.css          # complementos da área administrativa (usa a base da loja)
 js/dados-exemplo.js    # dados iniciais
@@ -44,6 +46,8 @@ js/loja.js             # vitrine, favoritos, detalhes, carrinho, finalização e
 js/admin.js            # cadastros e pedidos da área administrativa
 img/logo.png           # o ninja da Kabom
 img/produtos/          # fotos dos consoles (créditos em img/produtos/CREDITOS.md)
+CLAUDE.md, AGENTS.md   # orientações para quem for mexer no projeto (mantidos iguais)
+LICENSE                # licença MIT
 ```
 
 ## Tecnologias
